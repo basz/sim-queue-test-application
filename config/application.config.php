@@ -8,11 +8,15 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
+//        'Zend\Router',
+//        'Zend\Mvc\Console',
         'Application',
+//        'DoctrineModule',
+//        'DoctrineORMModule',
+        'AwsModule',
         'SlmQueue',
-        'DoctrineORMModule',
-        'DoctrineModule',
-        'SlmQueueDoctrine',
+//        'SlmQueueDoctrine',
+        'SlmQueueSqs',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

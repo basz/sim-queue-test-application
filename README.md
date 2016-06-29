@@ -18,7 +18,8 @@ php public/index.php add-job
 Process queue
 
 ```
-php public/index.php queue doctrine default --start
+php public/index.php queue doctrine doctrine --start
+php public/index.php queue sqs sqs
 ```
 
 

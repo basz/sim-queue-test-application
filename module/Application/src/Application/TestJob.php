@@ -19,7 +19,7 @@ class TestJob extends AbstractJob
      * @return void|int
      */
     public function execute() {
-        usleep(50000);
-        print 'executed a fine job';
+       // usleep(50000);
+        print 'executed a fine job' . PHP_EOL;
     }
 }

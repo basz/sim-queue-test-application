@@ -12,7 +12,11 @@ return [
          *
          * Available options depends on the queue factory
          */
-        'queues'            => [],
+        'queues'            => [
+            'queue-test-processor' => [
+                'queue_url' => 'https://sqs.eu-central-1.amazonaws.com/993674903262/sqs-test',
+            ]
+        ],
 
         /**
          * This block is use to register and configure strategies to the worker event manager. The default key holds any
@@ -45,15 +49,20 @@ return [
          */
         'worker_strategies' => [
             'default' => [ // per worker
-                \SlmQueue\Strategy\MaxRunsStrategy::class   => ['max_runs' => 3],
-                \SlmQueue\Strategy\MaxMemoryStrategy::class => ['max_memory' => 250 * 1024 * 1024],
-                \SlmQueue\Strategy\LogJobStrategy::class,
+                           \SlmQueue\Strategy\MaxRunsStrategy::class   => ['max_runs' => 500],
+                           \SlmQueue\Strategy\MaxMemoryStrategy::class => ['max_memory' => 250 * 1024 * 1024],
+                           \SlmQueue\Strategy\ProcessQueueStrategy::class,
+//                           \SlmQueue\Strategy\LogJobStrategy::class,
             ],
             'queues'  => [ // per queue
-                'default' => [
-                    \SlmQueueDoctrine\Strategy\ClearObjectManagerStrategy::class,
-                    \SlmQueueDoctrine\Strategy\IdleNapStrategy::class => ['nap_duration' => 5],
-                ],
+//                           'doctrine' => [
+//                               \SlmQueueDoctrine\Strategy\ClearObjectManagerStrategy::class,
+//                               \SlmQueueDoctrine\Strategy\IdleNapStrategy::class => ['nap_duration' => 5],
+//                           ],
+                           'queue-test-processor'      => [
+                               \SlmQueue\Strategy\MaxPollingFrequencyStrategy::class => ['max_frequency' => 0.1],
+//                               \SlmQueue\Strategy\LogJobStrategy::class,
+                           ]
             ],
         ],
 
@@ -109,29 +118,10 @@ return [
          * in SlmQueueSqs and SlmQueueBeanstalk
          */
         'queue_manager'     => [
-            'aliases'   => [
-                'default' => SlmQueueDoctrine\Queue\DoctrineQueue::class
-            ],
             'factories' => [
-                SlmQueueDoctrine\Queue\DoctrineQueue::class => \SlmQueueDoctrine\Factory\DoctrineQueueFactory::class
+                'doctrine' => \SlmQueueDoctrine\Factory\DoctrineQueueFactory::class,
+                'queue-test-processor'      => \SlmQueueSqs\Factory\SqsQueueFactory::class,
             ],
         ],
     ],
-    'console'   => [
-        'router' => [
-            'routes' => [
-                'application-add-job-test' => [
-                    'type'    => 'Simple',
-                    'options' => [
-                        'route'    => 'add-job',
-                        'defaults' => [
-                            'controller' => 'Application\Controller\Index',
-                            'action'     => 'addJob'
-                        ],
-                    ],
-                ],
-            ],
-        ],
-    ],
-
 ];

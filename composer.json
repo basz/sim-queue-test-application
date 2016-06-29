@@ -9,20 +9,18 @@
     "homepage": "http://framework.zend.com/",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/basz/SlmQueue"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/basz/SlmQueueDoctrine"
-        }
-    ],
     "require": {
-        "php": ">=5.5",
-        "zendframework/zendframework": "~2.5",
-        "slm/queue": "dev-eventmanager-deprecations as 0.6.0",
-        "slm/queue-doctrine": "dev-eventmanager-deprecations as 0.6.0"
+        "php": "^5.5 || ^7.0",
+        "slm/queue": "^0.6",
+        "slm/queue-sqs": "^0.6",
+        "zendframework/zend-modulemanager": "^2.7",
+        "zendframework/zend-servicemanager": "^2.7",
+        "zendframework/zend-log": "^2.8",
+        "zendframework/zend-serializer": "^2.8",
+        "zendframework/zend-i18n": "^2.7",
+        "zendframework/zend-console": "^2.6",
+        "zendframework/zend-mvc": "^2.7",
+        "zendframework/zend-cache": "^2.7",
+        "zendframework/zend-text": "^2.6"
     }
 }

@@ -22,6 +22,7 @@ class IndexController extends AbstractActionController
 
     public function addJobAction()
     {
-        $this->queue('default')->push(TestJob::class, $payload = null);
+//        $this->queue('doctrine')->push(TestJob::class, $payload = null);
+        $this->queue('queue-test-processor')->push(TestJob::class, $payload = null);
     }
 }
